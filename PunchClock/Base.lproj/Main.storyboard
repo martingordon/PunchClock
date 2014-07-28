@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="HjO-G5-yxc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6185.11" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="HjO-G5-yxc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6190.4"/>
     </dependencies>
     <scenes>
         <!--Location Table-->
@@ -416,7 +416,7 @@
             </objects>
             <point key="canvasLocation" x="495" y="536"/>
         </scene>
-        <!--Messages Table View Controller - Messages-->
+        <!--Messages-->
         <scene sceneID="9w8-L1-4rT">
             <objects>
                 <viewController id="L2I-VZ-26m" customClass="PCMessagesTableViewController" sceneMemberID="viewController">
@@ -430,7 +430,6 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pcd-Ij-1GP">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bJ6-EX-HOd" userLabel="Status View">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
@@ -452,7 +451,7 @@
                                             <constraint firstAttribute="centerX" secondItem="Zxp-S6-jHC" secondAttribute="centerX" constant="-4.5" id="yBb-vX-oPh"/>
                                         </constraints>
                                     </view>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GWw-Ys-4uO">
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GWw-Ys-4uO">
                                         <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                                         <subviews>
                                             <tableView clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="74" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="SPP-wI-frk">
@@ -484,9 +483,8 @@
                                                                         <constraint firstAttribute="width" constant="32" id="6zY-jO-6DX"/>
                                                                     </constraints>
                                                                 </imageView>
-                                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Hey peeps, I'm running a bit late but I'll be there at around 10." translatesAutoresizingMaskIntoConstraints="NO" id="nTL-9Y-cRG">
+                                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Hey peeps, I'm running a bit late but I'll be there at around 10." translatesAutoresizingMaskIntoConstraints="NO" id="nTL-9Y-cRG">
                                                                     <rect key="frame" x="52" y="21" width="261" height="53"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -494,7 +492,6 @@
                                                                 </textView>
                                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21 Jul 12:21am" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="12t-k0-WXK">
                                                                     <rect key="frame" x="200" y="7" width="105" height="21"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="105" id="P9V-RZ-yMt"/>
                                                                     </constraints>
@@ -569,7 +566,7 @@
             </objects>
             <point key="canvasLocation" x="1029" y="1576"/>
         </scene>
-        <!--Status Table View Controller - Team-->
+        <!--Team-->
         <scene sceneID="fxV-jx-bWd">
             <objects>
                 <viewController id="fDc-ah-AGI" customClass="PCStatusTableViewController" sceneMemberID="viewController">
@@ -614,7 +611,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yRk-pg-sQs">
                                 <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="AhI-65-YQB">
+                                    <tableView clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="AhI-65-YQB">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
                                         <color key="backgroundColor" red="0.270588249" green="0.18823531269999999" blue="0.26274511220000002" alpha="1" colorSpace="deviceRGB"/>
                                         <color key="separatorColor" red="0.270588249" green="0.18823531269999999" blue="0.26274511220000002" alpha="1" colorSpace="deviceRGB"/>
@@ -692,7 +689,7 @@
             </objects>
             <point key="canvasLocation" x="1029" y="899"/>
         </scene>
-        <!--Message Form View Controller - Message-->
+        <!--Message-->
         <scene sceneID="4HP-uh-fAc">
             <objects>
                 <viewController storyboardIdentifier="messsageForm" title="Message" id="2wa-Mo-zWR" customClass="PCMessageFormViewController" sceneMemberID="viewController">
@@ -789,7 +786,7 @@
             </objects>
             <point key="canvasLocation" x="1969" y="335"/>
         </scene>
-        <!--Navigation Controller - Information-->
+        <!--Information-->
         <scene sceneID="2l4-Tj-ALa">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="T2N-Si-LxJ" sceneMemberID="viewController">
@@ -840,9 +837,12 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
+        <simulatedScreenMetrics key="destination" type="retina4">
+            <size key="portraitSize" width="320" height="568"/>
+            <size key="landscapeSize" width="568" height="320"/>
+        </simulatedScreenMetrics>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="T4s-PK-4NR"/>
+        <segue reference="8Js-GT-8ub"/>
     </inferredMetricsTieBreakers>
 </document>

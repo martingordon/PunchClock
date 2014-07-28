@@ -7,9 +7,10 @@
 //
 
 #import "PCAppDelegate.h"
-#import <HockeySDK/HockeySDK.h>
+#import <Crashlytics/Crashlytics.h>
 #import <KeychainItemWrapper/KeychainItemWrapper.h>
-#import <ZeroPush/ZeroPush.h>
+#import <Parse/Parse.h>
+
 
 @implementation PCAppDelegate
 
@@ -28,26 +29,9 @@
 	PCFileFunctionLevelFormatter *formatter = [PCFileFunctionLevelFormatter new];
 	[[DDTTYLogger sharedInstance] setLogFormatter:formatter];
 
-	// Hockey
-	[[BITHockeyManager sharedHockeyManager] configureWithBetaIdentifier:hockeyBetaIdentifier
-														 liveIdentifier:@"00000000000000000000000000000000"
-															   delegate:self];
+    [Crashlytics startWithAPIKey:CrashlyticsAPIKey];
 
-	[BITHockeyManager sharedHockeyManager].crashManager.showAlwaysButton = YES;
-
-#ifdef CONFIGURATION_Debug
-	[BITHockeyManager sharedHockeyManager].disableCrashManager = YES;
-	[BITHockeyManager sharedHockeyManager].disableUpdateManager = YES;
-#else
-	[[BITHockeyManager sharedHockeyManager].authenticator setAuthenticationSecret:hockeyAuthenticationSecret];
-	[[BITHockeyManager sharedHockeyManager].authenticator setIdentificationType:BITAuthenticatorIdentificationTypeHockeyAppEmail];
-#endif
-
-	[[BITHockeyManager sharedHockeyManager] startManager];
-
-#ifdef CONFIGURATION_Beta
-	[[BITHockeyManager sharedHockeyManager].authenticator authenticateInstallation];
-#endif
+    [Parse setApplicationId:ParseAppID clientKey:ParseAPIKey];
 
 	// Default Settings
 	NSMutableDictionary *settings = [NSMutableDictionary dictionaryWithCapacity:1];
@@ -141,19 +125,26 @@
 
 #pragma mark - Notifications
 
+
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)tokenData
 {
-    [[ZeroPush shared] registerDeviceToken:tokenData];
-    NSString *tokenString = [ZeroPush deviceTokenFromData:tokenData];
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	[defaults setObject:tokenString forKey:@"push_id"];
+    // Store the deviceToken in the current installation and save it to Parse.
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setDeviceTokenFromData:tokenData];
+    [currentInstallation saveInBackground];
 
-    DDLogDebug(@"Push Token is %@", tokenString);
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[defaults setObject:currentInstallation.deviceToken forKey:@"push_id"];
+    [defaults synchronize];
+
+    DDLogDebug(@"Push Token is %@", currentInstallation.deviceToken);
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
 	DDLogDebug(@"Push notification: %@", userInfo);
+
+    [PFPush handlePush:userInfo];
 
 	//if the notification doesn't say there is content available just return
     NSDictionary *aps = [userInfo objectForKey:@"aps"];
@@ -198,11 +189,7 @@
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
 	// If the application is in the foreground, we will notify the user of the region's state via an alert.
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:notification.alertBody
-													message:nil
-												   delegate:nil
-										  cancelButtonTitle:NSLocalizedString(@"OK", @"")
-										  otherButtonTitles:nil];
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:notification.alertBody message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 	[alert show];
 
 }
@@ -245,16 +232,6 @@
 
 	// Called when the control center is dismissed
 	[self.locationManager enterForeground];
-
-#ifdef CONFIGURATION_Debug
-	[ZeroPush engageWithAPIKey:zeroPushDevKey delegate:self];
-#else
-	[ZeroPush engageWithAPIKey:zeroPushProdKey delegate:self];
-#endif
-
-    [[ZeroPush shared] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert |
-                                                           UIRemoteNotificationTypeBadge |
-                                                           UIRemoteNotificationTypeSound)];
 
 
 	if ([application enabledRemoteNotificationTypes] == UIRemoteNotificationTypeNone) {

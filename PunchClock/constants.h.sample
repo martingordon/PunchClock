@@ -19,8 +19,7 @@ static const int ddLogLevel = LOG_LEVEL_WARN;
 #define geoFenceLat 45.522761
 #define geoFenceRadius 30.0
 
-#define hockeyBetaIdentifier @"00000000000000000000000000000000"
-#define hockeyAuthenticationSecret @"00000000000000000000000000000000"
+#define CrashlyticsAPIKey @"00000"
 
-#define zeroPushDevKey @"xxx"
-#define zeroPushProdKey @"xxx"
+#define ParseAppID @"0000"
+#define ParseAPIKey @"0000"
