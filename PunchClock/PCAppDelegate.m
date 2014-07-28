@@ -33,14 +33,22 @@
 
     [Parse setApplicationId:ParseAppID clientKey:ParseAPIKey];
 
+    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge | UIUserNotificationTypeAlert | UIUserNotificationTypeSound categories:nil]];
+        [application registerForRemoteNotifications];
+    } else {
+        [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
+    }
+
 	// Default Settings
 	NSMutableDictionary *settings = [NSMutableDictionary dictionaryWithCapacity:1];
 	[settings setObject:@"" forKey:@"username"];
 	[settings setObject:@"" forKey:@"push_id"];
 
 	[[NSUserDefaults standardUserDefaults] registerDefaults:settings];
-
 	[[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:@"username" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial) context:NULL];
+    [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:@"push_id" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial) context:NULL];
+
 
 	self.locationManager = [PCLocationManager sharedLocationManager];
 
@@ -233,8 +241,9 @@
 	// Called when the control center is dismissed
 	[self.locationManager enterForeground];
 
+    if (([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)] && !application.isRegisteredForRemoteNotifications) ||
+            (![application respondsToSelector:@selector(isRegisteredForRemoteNotifications)] && [application enabledRemoteNotificationTypes] == UIRemoteNotificationTypeNone)) {
 
-	if ([application enabledRemoteNotificationTypes] == UIRemoteNotificationTypeNone) {
 		DDLogError(@"Notifications disabled");
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		[defaults setObject:@"" forKey:@"push_id"];

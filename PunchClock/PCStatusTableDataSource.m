@@ -100,6 +100,11 @@ static NSString *cellIdentifier = @"StatusTableCell";
 	return self.allPeople.count;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 44.0f;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];

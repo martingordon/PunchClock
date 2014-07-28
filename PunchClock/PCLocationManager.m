@@ -278,7 +278,11 @@
 
 	DDLogDebug(@"Entering Foreground");
 
-	[self.locationManager startUpdatingLocation];
+    if ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+        [self.locationManager requestAlwaysAuthorization];
+    }
+
+    [self.locationManager startUpdatingLocation];
 	[self.locationManager stopMonitoringSignificantLocationChanges];
 
 	[self startRanging];
